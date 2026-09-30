@@ -26,6 +26,32 @@ const getAuthHeaders = (): Record<string, string> => {
 
 export const api = {
   // Authentication
+  registerFarmer: async (data: any): Promise<UserSession> => {
+    const res = await fetch(`${API_BASE}/auth/farmer/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw err.detail || 'Unable to register farmer account.';
+    }
+    return res.json();
+  },
+
+  registerBuyer: async (data: any): Promise<UserSession> => {
+    const res = await fetch(`${API_BASE}/auth/buyer/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw err.detail || 'Unable to register buyer account.';
+    }
+    return res.json();
+  },
+
   loginFarmer: async (identifier: string, password: string): Promise<UserSession> => {
     const res = await fetch(`${API_BASE}/auth/farmer/login`, {
       method: 'POST',

@@ -6,7 +6,9 @@ import { ProtectedRoute } from './components/auth/ProtectedRoute';
 // Public & Auth Pages
 import { LandingPage } from './pages/LandingPage';
 import { FarmerLoginPage } from './pages/auth/FarmerLoginPage';
+import { FarmerRegisterPage } from './pages/auth/FarmerRegisterPage';
 import { BuyerLoginPage } from './pages/auth/BuyerLoginPage';
+import { BuyerRegisterPage } from './pages/auth/BuyerRegisterPage';
 
 // Farmer Portal Pages
 import { FarmerLayout } from './components/layout/FarmerLayout';
@@ -49,7 +51,9 @@ export const App: React.FC = () => {
           {/* Public Portal Routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/farmer/login" element={<FarmerLoginPage />} />
+          <Route path="/farmer/register" element={<FarmerRegisterPage />} />
           <Route path="/buyer/login" element={<BuyerLoginPage />} />
+          <Route path="/buyer/register" element={<BuyerRegisterPage />} />
 
           {/* Farmer Portal (Protected) */}
           <Route

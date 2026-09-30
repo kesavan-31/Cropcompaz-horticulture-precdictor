@@ -162,6 +162,16 @@ export const BuyerLoginPage: React.FC = () => {
                 )}
               </button>
             </div>
+
+            <div className="pt-3 text-center border-t border-stone-100 mt-4">
+              <button
+                type="button"
+                onClick={() => navigate('/buyer/register')}
+                className="text-xs font-semibold text-emerald-800 hover:underline"
+              >
+                {lang === 'en' ? "New buyer or aggregator? Register here" : "புதிய கொள்முதல் நிறுவனமா? பதிவு செய்க"}
+              </button>
+            </div>
           </form>
         </div>
       </div>

@@ -162,6 +162,16 @@ export const FarmerLoginPage: React.FC = () => {
                 )}
               </button>
             </div>
+
+            <div className="pt-3 text-center border-t border-stone-100 mt-4">
+              <button
+                type="button"
+                onClick={() => navigate('/farmer/register')}
+                className="text-xs font-semibold text-emerald-800 hover:underline"
+              >
+                {lang === 'en' ? "New farmer? Register your farm here" : "புதிய விவசாயியா? பண்ணையை பதிவு செய்க"}
+              </button>
+            </div>
           </form>
         </div>
       </div>

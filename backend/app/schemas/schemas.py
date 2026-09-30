@@ -189,6 +189,30 @@ class LoginRequest(BaseModel):
     identifier: str = Field(..., description="Email or Phone Number")
     password: str = Field(..., min_length=1)
 
+class FarmerRegisterRequest(BaseModel):
+    name: str = Field(..., min_length=2)
+    phone: str = Field(..., description="Indian phone number")
+    email: Optional[str] = None
+    location: str = Field(default="Coimbatore, Tamil Nadu")
+    farm_size: float = Field(default=2.0, gt=0.0, le=1000.0)
+    crop: str = Field(default="Chilli")
+    variety: str = Field(default="Local")
+    growth_stage: str = Field(default="Vegetative")
+    workers: int = Field(default=1, ge=0)
+    budget: float = Field(default=5000.0, ge=0.0)
+    water_availability: str = Field(default="Limited")
+    password: str = Field(..., min_length=6)
+
+class BuyerRegisterRequest(BaseModel):
+    name: str = Field(..., min_length=2)
+    phone: str = Field(..., description="Contact phone")
+    email: Optional[str] = None
+    buyer_type: str = Field(default="Wholesale")  # Export, Wholesale, Retail, Processing, Local market
+    market: str = Field(default="APMC Market")
+    location: str = Field(default="Tamil Nadu")
+    required_crops: List[str] = Field(default_factory=lambda: ["Tomato", "Chilli"])
+    password: str = Field(..., min_length=6)
+
 class UserSessionOut(BaseModel):
     id: str
     name: str

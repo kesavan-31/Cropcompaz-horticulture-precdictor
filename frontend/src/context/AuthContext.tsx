@@ -7,7 +7,9 @@ interface AuthContextType {
   portalType: 'farmer' | 'buyer' | 'staff' | null;
   loading: boolean;
   loginFarmer: (identifier: string, pass: string) => Promise<void>;
+  registerFarmer: (data: any) => Promise<void>;
   loginBuyer: (identifier: string, pass: string) => Promise<void>;
+  registerBuyer: (data: any) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -47,8 +49,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setPortalType('farmer');
   };
 
+  const registerFarmer = async (data: any) => {
+    const session = await api.registerFarmer(data);
+    localStorage.setItem('cropcompaz_token', session.token);
+    localStorage.setItem('cropcompaz_portal', 'farmer');
+    localStorage.setItem('cropcompaz_user', JSON.stringify(session));
+    setUser(session);
+    setPortalType('farmer');
+  };
+
   const loginBuyer = async (identifier: string, pass: string) => {
     const session = await api.loginBuyer(identifier, pass);
+    localStorage.setItem('cropcompaz_token', session.token);
+    localStorage.setItem('cropcompaz_portal', 'buyer');
+    localStorage.setItem('cropcompaz_user', JSON.stringify(session));
+    setUser(session);
+    setPortalType('buyer');
+  };
+
+  const registerBuyer = async (data: any) => {
+    const session = await api.registerBuyer(data);
     localStorage.setItem('cropcompaz_token', session.token);
     localStorage.setItem('cropcompaz_portal', 'buyer');
     localStorage.setItem('cropcompaz_user', JSON.stringify(session));
@@ -66,7 +86,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, portalType, loading, loginFarmer, loginBuyer, logout }}>
+    <AuthContext.Provider value={{ user, portalType, loading, loginFarmer, registerFarmer, loginBuyer, registerBuyer, logout }}>
       {children}
     </AuthContext.Provider>
   );

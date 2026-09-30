@@ -126,3 +126,55 @@ def test_logout():
     # Subsequent request with invalidated token returns 401
     subsequent_resp = client.get("/api/farmer-portal/profile", headers=headers)
     assert subsequent_resp.status_code == 401
+
+def test_farmer_registration():
+    """Verify new farmer can register and immediately gets a valid session."""
+    reg_resp = client.post("/api/auth/farmer/register", json={
+        "name": "Arun Kumar",
+        "phone": "9123456780",
+        "location": "Salem, Tamil Nadu",
+        "farm_size": 3.5,
+        "crop": "Tomato",
+        "variety": "Hybrid",
+        "growth_stage": "Flowering",
+        "workers": 2,
+        "budget": 6000.0,
+        "water_availability": "Adequate",
+        "password": "NewFarmerPass123!"
+    })
+    assert reg_resp.status_code == 200
+    data = reg_resp.json()
+    assert "token" in data
+    assert data["farmer_id"] is not None
+
+    # Test login with new credentials
+    login_resp = client.post("/api/auth/farmer/login", json={
+        "identifier": "9123456780",
+        "password": "NewFarmerPass123!"
+    })
+    assert login_resp.status_code == 200
+
+def test_buyer_registration():
+    """Verify new buyer can register and immediately gets a valid session."""
+    reg_resp = client.post("/api/auth/buyer/register", json={
+        "name": "Coimbatore Agro Traders",
+        "phone": "9123456781",
+        "email": "traders@coimbatoreagro.com",
+        "buyer_type": "Wholesale",
+        "market": "Coimbatore APMC",
+        "location": "Coimbatore, Tamil Nadu",
+        "required_crops": ["Tomato", "Onion"],
+        "password": "NewBuyerPass123!"
+    })
+    assert reg_resp.status_code == 200
+    data = reg_resp.json()
+    assert "token" in data
+    assert data["buyer_id"] is not None
+
+    # Test login with new buyer credentials
+    login_resp = client.post("/api/auth/buyer/login", json={
+        "identifier": "9123456781",
+        "password": "NewBuyerPass123!"
+    })
+    assert login_resp.status_code == 200
+
