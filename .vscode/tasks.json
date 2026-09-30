@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start CropCompaz Backend",
+      "type": "shell",
+      "command": "cmd /c \"set PYTHONPATH=backend && py -3.11 -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload\"",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Start CropCompaz Frontend",
+      "type": "shell",
+      "command": "cmd /c \"cd frontend && npm run dev\"",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Run CropCompaz Application",
+      "dependsOn": [
+        "Start CropCompaz Backend",
+        "Start CropCompaz Frontend"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

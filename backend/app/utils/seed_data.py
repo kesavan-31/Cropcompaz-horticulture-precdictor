@@ -4,7 +4,8 @@ import csv
 import re
 from pathlib import Path
 from sqlalchemy.orm import Session
-from app.models.models import Farmer, FarmerEquipment, FarmerInput, AgronomyRule
+from app.models.models import Farmer, FarmerEquipment, FarmerInput, AgronomyRule, User, Buyer, BuyerRequirement, HarvestProduce
+from app.utils.security import hash_password
 
 SEED_RULES = [
     {
@@ -727,6 +728,178 @@ def seed_database(db: Session):
             db.add(inp)
 
         db.commit()
+
+    # 5. Seed Users for Auth
+    SEED_USERS = [
+        {
+            "id": "USR-001",
+            "name": "Uma (Farmer)",
+            "email": "farmer1@example.com",
+            "phone": "9876543210",
+            "password_hash": hash_password("FarmerPassword123!"),
+            "account_type": "FARMER",
+            "farmer_id": "F024",
+            "buyer_id": None,
+            "status": "ACTIVE"
+        },
+        {
+            "id": "USR-002",
+            "name": "Selvi (Farmer)",
+            "email": "selvi@example.com",
+            "phone": "8765432109",
+            "password_hash": hash_password("FarmerPassword123!"),
+            "account_type": "FARMER",
+            "farmer_id": "F002",
+            "buyer_id": None,
+            "status": "ACTIVE"
+        },
+        {
+            "id": "USR-003",
+            "name": "Chennai Export Hub",
+            "email": "buyer1@example.com",
+            "phone": "9876500001",
+            "password_hash": hash_password("BuyerPassword123!"),
+            "account_type": "BUYER",
+            "farmer_id": None,
+            "buyer_id": "B001",
+            "status": "ACTIVE"
+        },
+        {
+            "id": "USR-004",
+            "name": "Coimbatore Wholesale Market",
+            "email": "buyer2@example.com",
+            "phone": "9876500002",
+            "password_hash": hash_password("BuyerPassword123!"),
+            "account_type": "BUYER",
+            "farmer_id": None,
+            "buyer_id": "B002",
+            "status": "ACTIVE"
+        },
+        {
+            "id": "USR-005",
+            "name": "Agronomy Specialist",
+            "email": "staff@cropcompaz.local",
+            "phone": "9876500099",
+            "password_hash": hash_password("StaffPassword123!"),
+            "account_type": "COOPERATIVE_STAFF",
+            "farmer_id": None,
+            "buyer_id": None,
+            "status": "ACTIVE"
+        }
+    ]
+
+    for u_data in SEED_USERS:
+        existing = db.query(User).filter(User.id == u_data["id"]).first()
+        if not existing:
+            user = User(**u_data)
+            db.add(user)
+        else:
+            for k, v in u_data.items():
+                setattr(existing, k, v)
+    db.commit()
+
+    # 6. Seed Buyers
+    SEED_BUYERS = [
+        {
+            "id": "B001",
+            "name": "Chennai Export Hub",
+            "buyer_type": "Export",
+            "market": "Chennai APMC",
+            "location": "Chennai, Tamil Nadu",
+            "contact": "+91 98765 00001",
+            "required_crops": json.dumps(["Tomato", "Chilli", "Capsicum"]),
+            "status": "ACTIVE"
+        },
+        {
+            "id": "B002",
+            "name": "Coimbatore Wholesale Market",
+            "buyer_type": "Wholesale",
+            "market": "Coimbatore APMC",
+            "location": "Coimbatore, Tamil Nadu",
+            "contact": "+91 98765 00002",
+            "required_crops": json.dumps(["Onion", "Tomato", "Brinjal"]),
+            "status": "ACTIVE"
+        }
+    ]
+
+    for b_data in SEED_BUYERS:
+        existing = db.query(Buyer).filter(Buyer.id == b_data["id"]).first()
+        if not existing:
+            b_obj = Buyer(**b_data)
+            db.add(b_obj)
+    db.commit()
+
+    # 7. Seed Buyer Requirements
+    if db.query(BuyerRequirement).count() == 0:
+        req1 = BuyerRequirement(
+            buyer_id="B001",
+            crop="Chilli",
+            variety="Any",
+            required_grade="Grade A",
+            min_size_mm=70.0,
+            max_size_mm=100.0,
+            max_damage_pct=1.5,
+            max_disease_pct=0.5,
+            pest_tolerance="Zero Tolerance",
+            quantity_required_kg=1000.0,
+            packaging_requirement="Corrugated boxes 5kg",
+            status="ACTIVE"
+        )
+        req2 = BuyerRequirement(
+            buyer_id="B001",
+            crop="Tomato",
+            variety="Any",
+            required_grade="Grade A",
+            min_size_mm=60.0,
+            max_size_mm=80.0,
+            max_damage_pct=2.0,
+            max_disease_pct=1.0,
+            pest_tolerance="Zero Tolerance",
+            quantity_required_kg=2500.0,
+            packaging_requirement="Crates 20kg",
+            status="ACTIVE"
+        )
+        db.add_all([req1, req2])
+        db.commit()
+
+    # 8. Seed Harvest Produce
+    SEED_HARVESTS = [
+        {
+            "id": "H001",
+            "farmer_id": "F024",
+            "crop": "Chilli",
+            "variety": "Local",
+            "harvest_date": "2026-09-25",
+            "quantity": 250.0,
+            "unit": "kg",
+            "grade": "Grade A",
+            "damage_pct": 1.2,
+            "disease_pct": 0.5,
+            "inspection_status": "Inspected",
+            "assigned_buyer": "Chennai Export Hub"
+        },
+        {
+            "id": "H002",
+            "farmer_id": "F002",
+            "crop": "Chilli",
+            "variety": "Local",
+            "harvest_date": "2026-09-29",
+            "quantity": 140.0,
+            "unit": "kg",
+            "grade": "Grade A",
+            "damage_pct": 0.8,
+            "disease_pct": 0.3,
+            "inspection_status": "Inspected",
+            "assigned_buyer": "Chennai Export Hub"
+        }
+    ]
+
+    for h_data in SEED_HARVESTS:
+        existing = db.query(HarvestProduce).filter(HarvestProduce.id == h_data["id"]).first()
+        if not existing:
+            h_obj = HarvestProduce(**h_data)
+            db.add(h_obj)
+    db.commit()
 
 
 

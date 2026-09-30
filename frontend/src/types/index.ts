@@ -117,3 +117,64 @@ export interface ExperimentResult {
   improvement_percentage: number;
   status: string;
 }
+
+export interface UserSession {
+  id: string;
+  name: string;
+  email?: string | null;
+  phone?: string | null;
+  farmer_id?: string | null;
+  buyer_id?: string | null;
+  token: string;
+}
+
+export interface UserProfile {
+  id: string;
+  name: string;
+  email?: string | null;
+  phone?: string | null;
+  farmer_id?: string | null;
+  buyer_id?: string | null;
+  status: string;
+}
+
+export interface BuyerRequirement {
+  id: number;
+  buyer_id: string;
+  crop: string;
+  variety: string;
+  required_grade: string;
+  min_size_mm?: number | null;
+  max_size_mm?: number | null;
+  max_damage_pct?: number | null;
+  max_disease_pct?: number | null;
+  pest_tolerance?: string | null;
+  quantity_required_kg?: number | null;
+  packaging_requirement?: string | null;
+  status: string;
+}
+
+export interface HarvestProduce {
+  id: string;
+  farmer_id: string;
+  crop: string;
+  variety: string;
+  harvest_date: string;
+  quantity: number;
+  unit: string;
+  grade: string;
+  damage_pct?: number | null;
+  disease_pct?: number | null;
+  inspection_status: string;
+  assigned_buyer?: string | null;
+  created_at: string;
+}
+
+export interface FeedbackItem {
+  id: number;
+  farmer_id?: string | null;
+  rating: number;
+  category: string;
+  comment: string;
+  created_at: string;
+}

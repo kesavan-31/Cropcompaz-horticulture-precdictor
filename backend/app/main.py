@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine, Base, SessionLocal
-from app.routes import farmers, recommendations, rules, dashboard, experiments
+from app.routes import farmers, recommendations, rules, dashboard, experiments, auth, farmer_portal, buyer_portal
 from app.utils.seed_data import seed_database
 
 # Create SQLite DB tables
@@ -30,6 +30,9 @@ finally:
     db.close()
 
 # Mount API Routers
+app.include_router(auth.router)
+app.include_router(farmer_portal.router)
+app.include_router(buyer_portal.router)
 app.include_router(farmers.router)
 app.include_router(recommendations.router)
 app.include_router(rules.router)
