@@ -102,6 +102,16 @@ export const api = {
     return res.json();
   },
 
+  updateFarmerPortalProfile: async (data: Omit<Partial<Farmer>, 'equipment' | 'inputs'> & { equipment?: string[]; inputs?: any[] }): Promise<Farmer> => {
+    const res = await fetch(`${API_BASE}/farmer-portal/profile`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error('Failed to update farm resources');
+    return res.json();
+  },
+
   getFarmerPortalRecommendations: async (): Promise<Recommendation[]> => {
     const res = await fetch(`${API_BASE}/farmer-portal/recommendations`, {
       headers: getAuthHeaders(),

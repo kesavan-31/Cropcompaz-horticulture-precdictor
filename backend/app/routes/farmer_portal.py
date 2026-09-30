@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.models.models import User, Farmer, Recommendation, HarvestProduce, FeedbackRecord
-from app.schemas.schemas import FarmerOut, RecommendationOut, HarvestProduceOut, FeedbackCreateRequest, FeedbackOut
+from app.models.models import User, Farmer, FarmerEquipment, Recommendation, HarvestProduce, FeedbackRecord
+from app.schemas.schemas import FarmerOut, FarmerUpdate, RecommendationOut, HarvestProduceOut, FeedbackCreateRequest, FeedbackOut
 from app.utils.auth import get_current_farmer
 from app.engine.recommendation_engine import generate_recommendation_for_farmer
 from typing import List
@@ -24,6 +24,44 @@ def get_my_farm(current_user: User = Depends(get_current_farmer), db: Session = 
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Farm record not found."
         )
+    return farmer
+
+
+@router.put("/profile", response_model=FarmerOut)
+def update_my_farm(payload: FarmerUpdate, current_user: User = Depends(get_current_farmer), db: Session = Depends(get_db)):
+    """Update farm resources (budget, workers, irrigation, equipment, crop) for the authenticated farmer."""
+    if not current_user.farmer_id:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No farm profile linked to this user account."
+        )
+    
+    farmer = db.query(Farmer).filter(Farmer.id == current_user.farmer_id).first()
+    if not farmer:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Farm record not found."
+        )
+    
+    update_data = payload.model_dump(exclude_unset=True)
+    
+    # Handle equipment list replacement if provided
+    if "equipment" in update_data:
+        eq_list = update_data.pop("equipment")
+        if eq_list is not None:
+            db.query(FarmerEquipment).filter(FarmerEquipment.farmer_id == farmer.id).delete()
+            for eq_name in eq_list:
+                if eq_name and eq_name.strip():
+                    db.add(FarmerEquipment(farmer_id=farmer.id, equipment_name=eq_name.strip()))
+    
+    if "inputs" in update_data:
+        update_data.pop("inputs") # preserved
+    
+    for key, val in update_data.items():
+        setattr(farmer, key, val)
+    
+    db.commit()
+    db.refresh(farmer)
     return farmer
 
 

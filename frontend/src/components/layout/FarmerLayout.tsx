@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { 
   LayoutDashboard, 
   Sprout, 
@@ -12,7 +13,8 @@ import {
   Leaf, 
   LogOut,
   User,
-  Languages
+  Languages,
+  Globe
 } from 'lucide-react';
 
 interface FarmerLayoutProps {
@@ -21,6 +23,7 @@ interface FarmerLayoutProps {
 
 export const FarmerLayout: React.FC<FarmerLayoutProps> = ({ children }) => {
   const { user, logout } = useAuth();
+  const { lang, setLang, t } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -30,13 +33,13 @@ export const FarmerLayout: React.FC<FarmerLayoutProps> = ({ children }) => {
   };
 
   const navItems = [
-    { name: 'Dashboard', path: '/farmer/dashboard', icon: LayoutDashboard },
-    { name: 'My Farm', path: '/farmer/farm', icon: Sprout },
-    { name: 'Advisory', path: '/farmer/advisory', icon: Sparkles },
-    { name: 'Recommendations', path: '/farmer/recommendations', icon: History },
-    { name: 'Harvest', path: '/farmer/harvest', icon: Package },
-    { name: 'Quality', path: '/farmer/quality', icon: CheckCircle2 },
-    { name: 'Feedback', path: '/farmer/feedback', icon: MessageSquare },
+    { key: 'navDashboard', defaultName: 'Dashboard', path: '/farmer/dashboard', icon: LayoutDashboard },
+    { key: 'navMyFarm', defaultName: 'My Farm', path: '/farmer/farm', icon: Sprout },
+    { key: 'navAdvisory', defaultName: 'Advisory', path: '/farmer/advisory', icon: Sparkles },
+    { key: 'navRecommendations', defaultName: 'Recommendations', path: '/farmer/recommendations', icon: History },
+    { key: 'navHarvest', defaultName: 'Harvest', path: '/farmer/harvest', icon: Package },
+    { key: 'navQuality', defaultName: 'Quality', path: '/farmer/quality', icon: CheckCircle2 },
+    { key: 'navFeedback', defaultName: 'Feedback', path: '/farmer/feedback', icon: MessageSquare },
   ];
 
   return (
@@ -49,7 +52,7 @@ export const FarmerLayout: React.FC<FarmerLayoutProps> = ({ children }) => {
           </div>
           <div className="flex flex-col">
             <span className="font-bold text-lg tracking-tight text-white leading-none">CropCompaz</span>
-            <span className="text-[10px] text-[#A1E02F] tracking-wide uppercase font-semibold mt-1">Horticulture Portal</span>
+            <span className="text-[10px] text-[#A1E02F] tracking-wide uppercase font-semibold mt-1">{t('brandSubtitle')}</span>
           </div>
         </div>
 
@@ -82,21 +85,45 @@ export const FarmerLayout: React.FC<FarmerLayoutProps> = ({ children }) => {
               {({ isActive }) => (
                 <>
                   <item.icon className={`w-5 h-5 ${isActive ? 'text-[#0F291E]' : 'text-emerald-300'}`} />
-                  <span className="flex-1">{item.name}</span>
+                  <span className="flex-1">{t(item.key)}</span>
                 </>
               )}
             </NavLink>
           ))}
         </nav>
 
-        {/* Logout Button */}
-        <div className="p-4 border-t border-white/10">
+        {/* Language & Logout Controls */}
+        <div className="p-4 border-t border-white/10 space-y-2">
+          {/* Quick Language Switcher in Sidebar */}
+          <div className="flex items-center bg-black/20 p-1 rounded-xl">
+            <button
+              onClick={() => setLang('en')}
+              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
+                lang === 'en'
+                  ? 'bg-[#B4F042] text-[#0F291E] shadow-sm'
+                  : 'text-emerald-200 hover:text-white'
+              }`}
+            >
+              English
+            </button>
+            <button
+              onClick={() => setLang('ta')}
+              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
+                lang === 'ta'
+                  ? 'bg-[#B4F042] text-[#0F291E] shadow-sm'
+                  : 'text-emerald-200 hover:text-white'
+              }`}
+            >
+              தமிழ்
+            </button>
+          </div>
+
           <button
             onClick={handleLogout}
             className="w-full flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-bold text-rose-200 hover:bg-rose-900/40 transition"
           >
             <LogOut className="w-4 h-4" />
-            <span>Sign Out</span>
+            <span>{t('signOut')}</span>
           </button>
         </div>
       </aside>
@@ -105,9 +132,29 @@ export const FarmerLayout: React.FC<FarmerLayoutProps> = ({ children }) => {
       <div className="flex-1 flex flex-col min-w-0">
         <header className="h-16 border-b border-stone-200/80 bg-[#FAF8F5]/80 backdrop-blur px-8 flex items-center justify-between sticky top-0 z-20">
           <h1 className="text-sm font-semibold text-stone-600 tracking-wide">
-            CropCompaz · Horticulture Decision Portal
+            {t('decisionPortal')}
           </h1>
           <div className="flex items-center gap-4">
+            {/* Header Language Toggle Switch */}
+            <div className="flex items-center gap-1.5 bg-stone-200/60 p-1 rounded-lg border border-stone-300">
+              <Globe className="w-3.5 h-3.5 text-stone-600 ml-1.5" />
+              <button
+                onClick={() => setLang('en')}
+                className={`px-2 py-0.5 text-xs font-semibold rounded ${
+                  lang === 'en' ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-600 hover:text-stone-900'
+                }`}
+              >
+                English
+              </button>
+              <button
+                onClick={() => setLang('ta')}
+                className={`px-2 py-0.5 text-xs font-semibold rounded ${
+                  lang === 'ta' ? 'bg-[#163B2F] text-white shadow-sm' : 'text-stone-600 hover:text-stone-900'
+                }`}
+              >
+                தமிழ்
+              </button>
+            </div>
             <span className="text-xs font-semibold text-stone-700">{user?.name}</span>
           </div>
         </header>

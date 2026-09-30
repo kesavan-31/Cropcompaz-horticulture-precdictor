@@ -127,11 +127,14 @@ def test_logout():
     subsequent_resp = client.get("/api/farmer-portal/profile", headers=headers)
     assert subsequent_resp.status_code == 401
 
+import time
+
 def test_farmer_registration():
     """Verify new farmer can register and immediately gets a valid session."""
+    unique_phone = f"9{int(time.time()) % 1000000000:09d}"
     reg_resp = client.post("/api/auth/farmer/register", json={
         "name": "Arun Kumar",
-        "phone": "9123456780",
+        "phone": unique_phone,
         "location": "Salem, Tamil Nadu",
         "farm_size": 3.5,
         "crop": "Tomato",
@@ -149,17 +152,20 @@ def test_farmer_registration():
 
     # Test login with new credentials
     login_resp = client.post("/api/auth/farmer/login", json={
-        "identifier": "9123456780",
+        "identifier": unique_phone,
         "password": "NewFarmerPass123!"
     })
     assert login_resp.status_code == 200
 
 def test_buyer_registration():
     """Verify new buyer can register and immediately gets a valid session."""
+    unique_id = int(time.time() * 1000) % 1000000000
+    unique_phone = f"8{unique_id:09d}"
+    unique_email = f"traders_{unique_id}@coimbatoreagro.com"
     reg_resp = client.post("/api/auth/buyer/register", json={
         "name": "Coimbatore Agro Traders",
-        "phone": "9123456781",
-        "email": "traders@coimbatoreagro.com",
+        "phone": unique_phone,
+        "email": unique_email,
         "buyer_type": "Wholesale",
         "market": "Coimbatore APMC",
         "location": "Coimbatore, Tamil Nadu",
@@ -173,7 +179,7 @@ def test_buyer_registration():
 
     # Test login with new buyer credentials
     login_resp = client.post("/api/auth/buyer/login", json={
-        "identifier": "9123456781",
+        "identifier": unique_phone,
         "password": "NewBuyerPass123!"
     })
     assert login_resp.status_code == 200
