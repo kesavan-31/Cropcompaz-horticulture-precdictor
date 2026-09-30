@@ -785,6 +785,17 @@ def seed_database(db: Session):
             "farmer_id": None,
             "buyer_id": None,
             "status": "ACTIVE"
+        },
+        {
+            "id": "USR-006",
+            "name": "Kesav (Farmer)",
+            "email": "kesav@cropcompaz.local",
+            "phone": "6379802406",
+            "password_hash": hash_password("FarmerPassword123!"),
+            "account_type": "FARMER",
+            "farmer_id": "F024",
+            "buyer_id": None,
+            "status": "ACTIVE"
         }
     ]
 
