@@ -9,7 +9,8 @@ import {
   BarChart3, 
   MessageSquare, 
   FileText, 
-  Leaf 
+  Leaf,
+  ShoppingBag
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -21,10 +22,11 @@ export const Sidebar: React.FC<SidebarProps> = () => {
     { name: 'Dashboard', path: '/', icon: LayoutDashboard },
     { name: 'Farmers', path: '/farmers', icon: Users },
     { name: 'Advisory', path: '/advisory', icon: Sparkles },
-    { name: 'Produce', path: '/produce', icon: Package, planned: 'Phase 2' },
-    { name: 'Quality', path: '/quality', icon: CheckCircle2, planned: 'Phase 2' },
-    { name: 'Intelligence', path: '/intelligence', icon: BarChart3, planned: 'Phase 3' },
-    { name: 'Feedback & Audit', path: '/audit', icon: MessageSquare, planned: 'Phase 2' },
+    { name: 'Buyers', path: '/buyers', icon: ShoppingBag },
+    { name: 'Produce', path: '/produce', icon: Package },
+    { name: 'Quality', path: '/quality', icon: CheckCircle2 },
+    { name: 'Intelligence', path: '/intelligence', icon: BarChart3 },
+    { name: 'Feedback & Audit', path: '/audit', icon: MessageSquare },
     { name: 'Documentation', path: '/documentation', icon: FileText },
   ];
 
@@ -36,7 +38,7 @@ export const Sidebar: React.FC<SidebarProps> = () => {
           <Leaf className="w-5 h-5 fill-current" />
         </div>
         <div className="flex flex-col">
-          <span className="font-bold text-lg tracking-tight text-white leading-none">CropCompass</span>
+          <span className="font-bold text-lg tracking-tight text-white leading-none">CropCompaz</span>
           <span className="text-[10px] text-[#A1E02F] tracking-wide uppercase font-semibold mt-1">Horticulture Intelligence</span>
         </div>
       </div>
@@ -52,6 +54,7 @@ export const Sidebar: React.FC<SidebarProps> = () => {
           <NavLink
             key={item.path}
             to={item.path}
+            end={item.path === '/'}
             className={({ isActive }) =>
               `flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
                 isActive
@@ -64,13 +67,6 @@ export const Sidebar: React.FC<SidebarProps> = () => {
               <>
                 <item.icon className={`w-5 h-5 ${isActive ? 'text-[#0F291E]' : 'text-emerald-300'}`} />
                 <span className="flex-1">{item.name}</span>
-                {item.planned && (
-                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
-                    isActive ? 'bg-[#0F291E]/10 text-[#0F291E]' : 'bg-emerald-950/60 text-emerald-300/80'
-                  }`}>
-                    {item.planned}
-                  </span>
-                )}
               </>
             )}
           </NavLink>
@@ -79,8 +75,8 @@ export const Sidebar: React.FC<SidebarProps> = () => {
 
       {/* Footer info */}
       <div className="p-4 mx-4 mb-4 rounded-xl bg-emerald-950/50 border border-emerald-800/40 text-xs text-emerald-200/70">
-        <div className="font-semibold text-emerald-100 mb-0.5">CropCompass v1.0</div>
-        <div className="text-[11px]">Phase 1 Active Prototype</div>
+        <div className="font-semibold text-emerald-100 mb-0.5">CropCompaz v1.0</div>
+        <div className="text-[11px]">Guiding Every Crop Decision</div>
       </div>
     </aside>
   );

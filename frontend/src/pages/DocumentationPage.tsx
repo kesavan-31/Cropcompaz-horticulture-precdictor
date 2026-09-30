@@ -23,7 +23,7 @@ const DOC_TABS = [
   { id: 'failure_analysis', name: 'Failure Analysis', icon: ShieldCheck },
   { id: 'baseline_experiment', name: 'Baseline & Experiment', icon: BarChart3 },
   { id: 'testing_strategy', name: 'Testing Strategy', icon: CheckSquare },
-  { id: 'phase_roadmap', name: 'Phase Roadmap', icon: Milestone }
+  { id: 'phase_roadmap', name: 'System Roadmap', icon: Milestone }
 ];
 
 export const DocumentationPage: React.FC = () => {
@@ -34,7 +34,7 @@ export const DocumentationPage: React.FC = () => {
       <div>
         <h1 className="text-2xl font-extrabold text-[#0F291E]">System Documentation</h1>
         <p className="text-xs text-stone-500 mt-1">
-          Technical specifications, architecture details, agronomy evidence guidelines, failure cases, and phase roadmap.
+          Technical specifications, architecture details, agronomy evidence guidelines, failure cases, and platform roadmap.
         </p>
       </div>
 
@@ -170,7 +170,7 @@ export const DocumentationPage: React.FC = () => {
             <div>
               <h2 className="text-xl font-bold text-[#163B2F] mb-3">Baseline & Empirical Experiment</h2>
               <p className="text-stone-700 leading-relaxed mb-3">
-                CropCompass compares its resource-aware engine against a generic baseline that matches recommendations solely on Crop + Growth Stage while ignoring resource constraints.
+                CropCompaz compares its resource-aware engine against a generic baseline that matches recommendations solely on Crop + Growth Stage while ignoring resource constraints.
               </p>
               <div className="bg-[#FAF8F5] border border-stone-200 p-4 rounded-xl text-xs space-y-2 font-mono">
                 <div>Experiment Script: <code>py -3.11 scripts/run_experiment.py</code></div>
@@ -195,19 +195,19 @@ export const DocumentationPage: React.FC = () => {
 
           {activeTab === 'phase_roadmap' && (
             <div>
-              <h2 className="text-xl font-bold text-[#163B2F] mb-3">CropCompass Phase Roadmap</h2>
+              <h2 className="text-xl font-bold text-[#163B2F] mb-3">CropCompaz System Architecture Roadmap</h2>
               <div className="space-y-3 text-xs">
                 <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
-                  <span className="font-bold text-emerald-900">PHASE 1 (Completed Working Prototype):</span>
-                  <div className="text-stone-700 mt-1">Farmer CRUD, resource constraints, input quantities, water sources, versioned agronomy rules, feasibility scoring, explainability, alternatives, baseline experiment, 5 failure cases.</div>
+                  <span className="font-bold text-emerald-900">CORE ADVISORY ENGINE:</span>
+                  <div className="text-stone-700 mt-1">Farmer CRUD, resource constraints, input quantities, water sources, versioned agronomy rules, feasibility scoring, explainability, alternatives, baseline experiment, failure handling.</div>
                 </div>
                 <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl">
-                  <span className="font-bold text-amber-900">PHASE 2 (Planned Next Steps):</span>
-                  <div className="text-stone-700 mt-1">Produce grading, buyer requirements, human approval audit workflow, full Tamil translation, user field validation.</div>
+                  <span className="font-bold text-amber-900">COOPERATIVE & QUALITY WORKFLOW:</span>
+                  <div className="text-stone-700 mt-1">Produce grading, buyer requirements, human approval audit workflow, Tamil translation support, user field validation.</div>
                 </div>
                 <div className="p-4 bg-purple-50 border border-purple-200 rounded-xl">
-                  <span className="font-bold text-purple-900">PHASE 3 (Future Scope):</span>
-                  <div className="text-stone-700 mt-1">Authentication & RBAC, PostgreSQL, market price analytics, weather API & GIS integration.</div>
+                  <span className="font-bold text-purple-900">INTELLIGENCE & INTEGRATIONS:</span>
+                  <div className="text-stone-700 mt-1">Role-based access control, market price analytics, weather API & GIS location intelligence.</div>
                 </div>
               </div>
             </div>

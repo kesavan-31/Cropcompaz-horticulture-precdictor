@@ -301,10 +301,10 @@ export const DashboardPage: React.FC = () => {
           )}
         </div>
 
-        {/* Phase 1 System Status Card (1 col) */}
+        {/* Platform System Status Card (1 col) */}
         <div className="bg-white rounded-2xl p-6 border border-stone-200/80 shadow-xs space-y-4">
           <div className="flex items-center justify-between border-b border-stone-100 pb-3">
-            <h3 className="text-base font-bold text-stone-900">Phase 1 System Status</h3>
+            <h3 className="text-base font-bold text-stone-900">Platform System Status</h3>
             <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 uppercase">ACTIVE</span>
           </div>
 
@@ -318,7 +318,7 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           <div className="text-[11px] text-stone-500 pt-2 border-t border-stone-100 italic">
-            All Phase 1 features are connected to SQLite database queries and deterministic logic.
+            All features are connected to database queries and deterministic logic.
           </div>
         </div>
       </div>

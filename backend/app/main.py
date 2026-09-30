@@ -8,7 +8,7 @@ from app.utils.seed_data import seed_database
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="CropCompass API",
+    title="CropCompaz API",
     description="Resource-Aware Horticulture Advisory Assistant API",
     version="1.0.0"
 )
@@ -40,6 +40,6 @@ app.include_router(experiments.router)
 def health_check():
     return {
         "status": "healthy",
-        "service": "CropCompass API",
+        "service": "CropCompaz API",
         "version": "1.0.0"
     }

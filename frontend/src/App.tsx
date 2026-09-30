@@ -8,7 +8,11 @@ import { EditFarmerPage } from './pages/EditFarmerPage';
 import { AdvisoryPage } from './pages/AdvisoryPage';
 import { HistoryPage } from './pages/HistoryPage';
 import { DocumentationPage } from './pages/DocumentationPage';
-import { GenericPlannedPage } from './pages/GenericPlannedPage';
+import { BuyersPage } from './pages/BuyersPage';
+import { ProducePage } from './pages/ProducePage';
+import { QualityPage } from './pages/QualityPage';
+import { IntelligencePage } from './pages/IntelligencePage';
+import { AuditPage } from './pages/AuditPage';
 
 export const App: React.FC = () => {
   return (
@@ -21,49 +25,11 @@ export const App: React.FC = () => {
           <Route path="/farmers/edit/:id" element={<EditFarmerPage />} />
           <Route path="/advisory" element={<AdvisoryPage />} />
           <Route path="/advisory/history" element={<HistoryPage />} />
-          
-          {/* Future Modules */}
-          <Route 
-            path="/produce" 
-            element={
-              <GenericPlannedPage 
-                title="Produce Management" 
-                phase="Phase 2" 
-                description="Produce grading, harvest estimation, and buyer requirement matching." 
-              />
-            } 
-          />
-          <Route 
-            path="/quality" 
-            element={
-              <GenericPlannedPage 
-                title="Quality Intelligence" 
-                phase="Phase 2" 
-                description="Computer vision quality assessment, defect scoring, and grade classification." 
-              />
-            } 
-          />
-          <Route 
-            path="/intelligence" 
-            element={
-              <GenericPlannedPage 
-                title="Market & Crop Intelligence" 
-                phase="Phase 3" 
-                description="Predictive price analytics, climate pattern forecasting, and GIS regional intelligence." 
-              />
-            } 
-          />
-          <Route 
-            path="/audit" 
-            element={
-              <GenericPlannedPage 
-                title="Feedback & Audit Trail" 
-                phase="Phase 2" 
-                description="Field execution feedback, farmer adoption tracking, and supervisor override logs." 
-              />
-            } 
-          />
-
+          <Route path="/buyers" element={<BuyersPage />} />
+          <Route path="/produce" element={<ProducePage />} />
+          <Route path="/quality" element={<QualityPage />} />
+          <Route path="/intelligence" element={<IntelligencePage />} />
+          <Route path="/audit" element={<AuditPage />} />
           <Route path="/documentation" element={<DocumentationPage />} />
         </Routes>
       </Layout>

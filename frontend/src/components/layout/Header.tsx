@@ -5,7 +5,7 @@ interface HeaderProps {
   title?: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({ title = "Resource-Aware Horticulture Intelligence" }) => {
+export const Header: React.FC<HeaderProps> = ({ title = "CropCompaz – Resource-Aware Horticulture Intelligence" }) => {
   const [lang, setLang] = useState<'en' | 'ta'>('en');
 
   return (
