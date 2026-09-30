@@ -24,6 +24,7 @@ import { FarmerFeedbackPage } from './pages/farmer/FarmerFeedbackPage';
 // Buyer Portal Pages
 import { BuyerLayout } from './components/layout/BuyerLayout';
 import { BuyerDashboardPage } from './pages/buyer/BuyerDashboardPage';
+import { BuyerProfilePage } from './pages/buyer/BuyerProfilePage';
 import { BuyerRequirementsPage } from './pages/buyer/BuyerRequirementsPage';
 import { BuyerProducePage } from './pages/buyer/BuyerProducePage';
 import { BuyerTraceabilityPage } from './pages/buyer/BuyerTraceabilityPage';
@@ -86,6 +87,7 @@ export const App: React.FC = () => {
                   <BuyerLayout>
                     <Routes>
                       <Route path="dashboard" element={<BuyerDashboardPage />} />
+                      <Route path="profile" element={<BuyerProfilePage />} />
                       <Route path="requirements" element={<BuyerRequirementsPage />} />
                       <Route path="produce" element={<BuyerProducePage />} />
                       <Route path="quality" element={<BuyerProducePage />} />

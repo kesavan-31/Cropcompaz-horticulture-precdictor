@@ -27,6 +27,9 @@ export const FarmerFarmPage: React.FC = () => {
 
   // Edit form state
   const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    location: '',
     budget: 0,
     workers: 1,
     irrigation_available: '',
@@ -50,6 +53,9 @@ export const FarmerFarmPage: React.FC = () => {
       .then((data) => {
         setFarm(data);
         setFormData({
+          name: data.name || '',
+          phone: data.phone || '',
+          location: data.location || '',
           budget: data.budget || 0,
           workers: data.workers || 1,
           irrigation_available: data.irrigation_available || 'Drip Irrigation',
@@ -77,6 +83,9 @@ export const FarmerFarmPage: React.FC = () => {
         .filter(Boolean);
 
       const updated = await api.updateFarmerPortalProfile({
+        name: formData.name,
+        phone: formData.phone,
+        location: formData.location,
         budget: Number(formData.budget),
         workers: Number(formData.workers),
         irrigation_available: formData.irrigation_available,
@@ -136,6 +145,42 @@ export const FarmerFarmPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs">
+            {/* Farmer Name */}
+            <div>
+              <label className="block font-semibold text-stone-700 mb-1">{lang === 'ta' ? 'விவசாயி பெயர்' : 'Farmer Name'}</label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl focus:ring-2 focus:ring-emerald-500 font-semibold"
+                required
+              />
+            </div>
+
+            {/* Phone */}
+            <div>
+              <label className="block font-semibold text-stone-700 mb-1">{lang === 'ta' ? 'அலைபேசி எண்' : 'Phone Number'}</label>
+              <input
+                type="text"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                className="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl focus:ring-2 focus:ring-emerald-500 font-semibold"
+                required
+              />
+            </div>
+
+            {/* Location */}
+            <div>
+              <label className="block font-semibold text-stone-700 mb-1">{t('location')}</label>
+              <input
+                type="text"
+                value={formData.location}
+                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                className="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl focus:ring-2 focus:ring-emerald-500 font-semibold"
+                required
+              />
+            </div>
+
             {/* Budget */}
             <div>
               <label className="block font-semibold text-stone-700 mb-1">{t('availableBudget')} (₹)</label>

@@ -32,6 +32,7 @@ export const BuyerLayout: React.FC<BuyerLayoutProps> = ({ children }) => {
 
   const navItems = [
     { key: 'navDashboard', defaultName: 'Dashboard', path: '/buyer/dashboard', icon: LayoutDashboard },
+    { key: 'navProfile', defaultName: 'Profile & Details', path: '/buyer/profile', icon: Building2 },
     { key: 'navRequirements', defaultName: 'Requirements', path: '/buyer/requirements', icon: FileCheck },
     { key: 'navProduce', defaultName: 'Available Produce', path: '/buyer/produce', icon: Package },
     { key: 'navQualityInspections', defaultName: 'Quality Inspections', path: '/buyer/quality', icon: CheckCircle2 },

@@ -6,6 +6,7 @@ import {
   ExperimentResult, 
   UserSession, 
   UserProfile, 
+  Buyer,
   BuyerRequirement, 
   HarvestProduce, 
   FeedbackItem 
@@ -151,6 +152,24 @@ export const api = {
   },
 
   // Buyer Portal Specific APIs (Data Isolation)
+  getBuyerPortalProfile: async (): Promise<Buyer> => {
+    const res = await fetch(`${API_BASE}/buyer-portal/profile`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) throw new Error('Failed to fetch buyer profile');
+    return res.json();
+  },
+
+  updateBuyerPortalProfile: async (data: Partial<Buyer>): Promise<Buyer> => {
+    const res = await fetch(`${API_BASE}/buyer-portal/profile`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error('Failed to update buyer profile');
+    return res.json();
+  },
+
   getBuyerPortalRequirements: async (): Promise<BuyerRequirement[]> => {
     const res = await fetch(`${API_BASE}/buyer-portal/requirements`, {
       headers: getAuthHeaders(),

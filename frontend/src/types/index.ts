@@ -138,6 +138,17 @@ export interface UserProfile {
   status: string;
 }
 
+export interface Buyer {
+  id: string;
+  name: string;
+  buyer_type: string;
+  market: string;
+  location: string;
+  contact: string;
+  required_crops: string;
+  status: string;
+}
+
 export interface BuyerRequirement {
   id: number;
   buyer_id: string;

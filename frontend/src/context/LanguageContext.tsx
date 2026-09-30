@@ -30,6 +30,7 @@ const translations: Record<Language, Record<string, string>> = {
     navFeedback: "Feedback",
     
     // Buyer Nav
+    navProfile: "Profile & Sourcing Details",
     navRequirements: "Requirements",
     navProduce: "Available Produce",
     navQualityInspections: "Quality Inspections",
@@ -112,6 +113,7 @@ const translations: Record<Language, Record<string, string>> = {
     navFeedback: "கருத்துக்கள்",
     
     // Buyer Nav
+    navProfile: "சுயவிவரம் & விவரங்கள்",
     navRequirements: "கொள்முதல் தேவைகள்",
     navProduce: "கிடைக்கும் விளைபொருட்கள்",
     navQualityInspections: "தர ஆய்வுகள்",

@@ -254,6 +254,15 @@ class BuyerRequirementOut(BaseModel):
     class Config:
         from_attributes = True
 
+class BuyerUpdate(BaseModel):
+    name: Optional[str] = None
+    buyer_type: Optional[str] = None
+    market: Optional[str] = None
+    location: Optional[str] = None
+    contact: Optional[str] = None
+    required_crops: Optional[str] = None
+    status: Optional[str] = None
+
 class BuyerOut(BaseModel):
     id: str
     name: str
